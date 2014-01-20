@@ -1,4 +1,4 @@
-BMP-Discolor 2013-2014
+BMP-Discolor
 ============
 
 Program converted color BMP files in grayscale.
