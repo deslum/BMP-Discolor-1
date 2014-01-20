@@ -8,6 +8,7 @@ Usage:
 freebc [bmpfile] [-algorithm]
 
 Algorithms:
+
       -avg      Average algorithm
       
       -light    Lightness algorithm
