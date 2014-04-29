@@ -1,4 +1,4 @@
-BMP-Discolor
+BMP-Discolor unstable version
 ============
 
 Program converted color BMP files in grayscale.
