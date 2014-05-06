@@ -169,20 +169,20 @@ end;
 
 var
  hBMP:TBMP;
- val1,key:string;
+ Val1,Key:String;
 begin
- val1:=paramstr(1);
- key:=paramstr(2);
- if (paramcount<3) and (length(val1)<5) then begin
+ Val1:=Paramstr(1);
+ Key:=Paramstr(2);
+ if (Paramcount<3) and (Length(Val1)<5) then begin
  ShowHelp();
  Halt;
  end;
- hBMP:=TBMP.Create(val1);
- if key = '-avg' then
+ hBMP:=TBMP.Create(Val1);
+ if Key = '-avg' then
   hBMP.ConverttoGray(@hbmp.Average,'grey_'+val1)
- else if key = '-light' then 
+ else if Key = '-light' then 
   hBMP.ConverttoGray(@hbmp.Lightness,'grey_'+val1)
- else if key = '-lum' then
+ else if Key = '-lum' then
   hBMP.ConverttoGray(@hbmp.Luminosity,'grey_'+val1)
  else
   ShowHelp();
