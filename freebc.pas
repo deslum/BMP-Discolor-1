@@ -5,69 +5,69 @@ By Yurij Bukatkin <Zaj87@bk.ru>
 ===============================================================
 }
 
-program bmp;
+Program Bmp;
 
 {$mode objfpc}
 
 
-type
+Type
 TBMPHeader = packed record
- CodeA:byte;
- CodeB:byte;
- FileSize:longint;
- Res1:word;
- Res2:word;
- PosBMP:longint;
- HeaderSize:longint;
- iWidth:longint;
- iHeight:longint;
- iPlanes:word;
- iBitCount:word;
- iCompress:longint;
- iSizeImage:longint;
- xResolution:longint;
- yResolution:longint;
- ColorUsed:longint;
- ColorImportant:longint;
+ CodeA:Byte;
+ CodeB:Byte;
+ FileSize:Longint;
+ Res1:Word;
+ Res2:Word;
+ PosBMP:Longint;
+ HeaderSize:Longint;
+ iWidth:Longint;
+ iHeight:Longint;
+ iPlanes:Word;
+ iBitCount:Word;
+ iCompress:Longint;
+ iSizeImage:Longint;
+ xResolution:Longint;
+ yResolution:Longint;
+ ColorUsed:Longint;
+ ColorImportant:Longint;
 end;
 
 type
 TRGB = record
- Blue:byte;
- Green:byte;
- Red:byte;
+ Blue:Byte;
+ Green:Byte;
+ Red:Byte;
 end;
 
 
 type
- Tfunc = function(RGB:TRGB):integer of object;
+ TFunc = function(RGB:TRGB):Integer of object;
  
 type
 TBMP = class(TObject)
  private
   BMPFile:file;
   BMPHeader:TBMPHeader;
-  function Lightness(RGB:TRGB):integer;
-  function Luminosity(RGB:TRGB):integer;
-  function Average(RGB:TRGB):integer;
+  function Lightness(RGB:TRGB):Integer;
+  function Luminosity(RGB:TRGB):Integer;
+  function Average(RGB:TRGB):Integer;
  public
-  constructor Create(FileName:string);
+  constructor Create(FileName:String);
   destructor Destroy;override;
-  procedure ConvertToGray(f:Tfunc;OutputFile:string);
+  procedure ConvertToGray(F:TFunc;OutputFile:String);
 end;
 
 
-constructor TBMP.Create(FileName:string);
+constructor TBMP.Create(FileName:String);
 begin 
- assign(BMPFile,FileName);
+ Assign(BMPFile,FileName);
 {$i-}
- reset(BMPFile,1);
+ Reset(BMPFile,1);
 {$i+}
  if IOResult<>0 then begin
-	writeln('File ',FileName,' Not Found');
+	Writeln('File ',FileName,' Not Found');
 	Halt;
 end;
- BlockRead(BMPFile,BMPHeader,sizeof(TBMPHeader));
+ BlockRead(BMPFile,BMPHeader,Sizeof(TBMPHeader));
 end;
 
 destructor TBMP.Destroy;
@@ -78,8 +78,8 @@ end;
 
 function TBMP.Lightness(RGB:TRGB):integer;
 var
-a:array[0..2] of byte;
-max,min:byte;
+a:array[0..2] of Byte;
+Max,Min:Byte;
 i:1..2;
 begin
  a[0]:=rgb.red;
@@ -91,27 +91,27 @@ begin
   if a[i]<min then min:=a[i];
   if a[i]>max then max:=a[i];
  end;
- Result:=round((max+min)/2);
+ Result:=Round((max+min)/2);
 end;
 
 
-function TBMP.Luminosity(RGB:TRGB):integer;
+function TBMP.Luminosity(RGB:TRGB):Integer;
 begin
  Result:=round(0.21*rgb.red+0.71*rgb.green+0.07*rgb.blue);
 end;
 
 
-function TBMP.Average(RGB:TRGB):integer;
+function TBMP.Average(RGB:TRGB):Integer;
 begin
- Result:=round((rgb.red+rgb.green+rgb.blue)/3);
+ Result:=Round((rgb.red+rgb.green+rgb.blue)/3);
 end;
 
-procedure TBMP.ConvertToGray(f:Tfunc;OutputFile:string);
+procedure TBMP.ConvertToGray(F:TFunc;OutputFile:String);
 var
- oBMP:file;
+ oBMP:File;
  RGB:TRGB;
  oHeader:TBMPHeader;
- i,j,bw:integer;
+ i,j,bw:Integer;
 begin
 with oHeader do begin
  CodeA:=$42;
@@ -132,9 +132,9 @@ with oHeader do begin
  ColorUsed:=BMPHeader.Colorused;
  ColorImportant:=BMPHeader.ColorImportant;
 end;
- assignfile(oBMP,OutputFile);
+ Assignfile(oBMP,OutputFile);
 {$i-}
-rewrite(oBMP,1);
+ Rewrite(oBMP,1);
 {$i+}
 if IOResult<>0 then begin
 	Writeln('Error creating file ',OutputFile);
