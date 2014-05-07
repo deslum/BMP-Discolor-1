@@ -145,9 +145,9 @@ for i:=0 to BMPHeader.iWidth-1 do begin
  for j:=0 to BMPHeader.iHeight-1 do begin
  BlockRead(BMPFile,RGB,sizeof(TRGB));
  bw:=f(RGB);
- rgb.red:=bw;
- rgb.green:=bw;
- rgb.blue:=bw;
+ RGB.red:=bw;
+ RGB.green:=bw;
+ RGB.blue:=bw;
  BlockWrite(oBMP,RGB,sizeof(TRGB));
  end;
 end;
@@ -179,11 +179,11 @@ begin
  end;
  hBMP:=TBMP.Create(Val1);
  if Key = '-avg' then
-  hBMP.ConverttoGray(@hbmp.Average,'grey_'+val1)
+  hBMP.ConverttoGray(@hbmp.Average,'grey_'+Val1)
  else if Key = '-light' then 
-  hBMP.ConverttoGray(@hbmp.Lightness,'grey_'+val1)
+  hBMP.ConverttoGray(@hbmp.Lightness,'grey_'+Val1)
  else if Key = '-lum' then
-  hBMP.ConverttoGray(@hbmp.Luminosity,'grey_'+val1)
+  hBMP.ConverttoGray(@hbmp.Luminosity,'grey_'+Val1)
  else
   ShowHelp();
  hBMP.Destroy;
